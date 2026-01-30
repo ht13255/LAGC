@@ -252,16 +252,6 @@ from lagc import (
 
 ---
 
-## 📖 Documentation
-
-Full documentation: [https://lagc.readthedocs.io](https://lagc.readthedocs.io)
-
-- [Getting Started Tutorial](https://lagc.readthedocs.io/tutorial)
-- [API Reference](https://lagc.readthedocs.io/api)
-- [Theoretical Background](https://lagc.readthedocs.io/theory)
-
----
-
 ## 📝 Citation
 
 If you use LAGC in your research, please cite:
@@ -318,4 +308,5 @@ MIT License - see [LICENSE](LICENSE) for details.
   <br>
   ⭐ Star us on GitHub if LAGC helps your research!
 </p>
+
 
