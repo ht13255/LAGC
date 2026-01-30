@@ -98,8 +98,5 @@ pytest tests/test_core.py -v
 - 예상 동작 vs 실제 동작
 - 전체 에러 메시지
 
-## 질문
-
-- [GitHub Discussions](https://github.com/quantum-dev/lagc/discussions)
-
 감사합니다! 🚀
+
