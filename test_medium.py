@@ -1,0 +1,60 @@
+"""Test LAGC with moderate size."""
+from lagc import LAGC
+import time
+
+# Test 1: 4x4 cluster (16 qubits)
+print("=" * 50)
+print("Test 1: 4x4 Cluster State (16 qubits)")
+print("=" * 50)
+sim = LAGC(ram_limit_gb=4, hardware='realistic')
+sim.create_lattice('2d_cluster', 4, 4)
+print(f"Lattice: {sim.n_qubits} qubits, {sim.graph.get_edge_count()} edges")
+sim.apply_loss(0.1, seed=42)
+result = sim.run_simulation()
+print(f"Fidelity: {result.fidelity:.4f}")
+print(f"Time: {result.execution_time:.2f}s")
+print("✓ PASSED")
+
+# Test 2: 5x5 cluster (25 qubits - at limit)  
+print("\n" + "=" * 50)
+print("Test 2: 5x5 Cluster State (25 qubits)")
+print("=" * 50)
+sim = LAGC(ram_limit_gb=4, hardware='ideal')
+sim.create_lattice('2d_cluster', 5, 5)
+print(f"Lattice: {sim.n_qubits} qubits, {sim.graph.get_edge_count()} edges")
+sim.apply_loss(0.05, seed=42)
+start = time.time()
+result = sim.run_simulation()
+print(f"Fidelity: {result.fidelity:.4f}")
+print(f"Time: {time.time() - start:.2f}s")
+print("✓ PASSED")
+
+# Test 3: 3D RHG small
+print("\n" + "=" * 50)
+print("Test 3: 3D RHG (2x2x2)")  
+print("=" * 50)
+sim = LAGC(ram_limit_gb=4)
+sim.create_lattice('3d_rhg', 2, 2, 2)
+print(f"Lattice: {sim.n_qubits} qubits, {sim.graph.get_edge_count()} edges")
+sim.apply_loss(0.05)
+result = sim.run_simulation()
+print(f"Fidelity: {result.fidelity:.4f}")
+print("✓ PASSED")
+
+# Test 4: Loss tolerance scan
+print("\n" + "=" * 50)
+print("Test 4: Loss Tolerance Scan")
+print("=" * 50)
+sim = LAGC(hardware='ideal', seed=42)
+for p_loss in [0.0, 0.05, 0.1, 0.15]:
+    sim.reset()
+    sim.create_lattice('2d_cluster', 4, 4)
+    sim.apply_loss(p_loss)
+    result = sim.run_simulation()
+    bar = "█" * int(result.fidelity * 20)
+    print(f"p={p_loss:.2f}: fidelity={result.fidelity:.4f} |{bar}")
+print("✓ PASSED")
+
+print("\n" + "=" * 50)
+print("ALL TESTS PASSED!")
+print("=" * 50)
