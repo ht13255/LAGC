@@ -195,7 +195,7 @@ Intermediate tensor > Available RAM?
 
 ### Algorithm 3: Fidelity Estimation
 
-$$F_{final} = \prod (1 - p_{gate})^{n_{gates}} \times \exp\left(-\sum \text{loss\_paths}\right)$$
+$$F{final} = \prod (1 - p{gate})^{n{gates}} \times \exp\left(-\sum \text{loss\paths}\right)$$
 
 ---
 
@@ -308,5 +308,6 @@ MIT License - see [LICENSE](LICENSE) for details.
   <br>
   ⭐ Star us on GitHub if LAGC helps your research!
 </p>
+
 
 
