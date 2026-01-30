@@ -52,7 +52,7 @@ It models realistic photon loss, automatically repairs damaged graph states thro
 ## 📦 Installation
 
 ```bash
-pip install lagc
+pip install lagc-quantum-photonics
 ```
 
 ### From Source
@@ -318,3 +318,4 @@ MIT License - see [LICENSE](LICENSE) for details.
   <br>
   ⭐ Star us on GitHub if LAGC helps your research!
 </p>
+
