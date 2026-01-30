@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lagc"
+name = "lagc-quantum-photonics"
 version = "1.0.0"
 description = "LossAware-GraphCompiler: CPU-only loss-aware quantum graph compiler for photonic quantum computing simulation"
 readme = "README.md"
@@ -154,3 +154,4 @@ exclude_lines = [
     "raise NotImplementedError",
     "if TYPE_CHECKING:",
 ]
+
