@@ -2,7 +2,7 @@
   <img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
   <img src="https://img.shields.io/badge/Platform-CPU_Only-orange.svg" alt="Platform">
-  <img src="https://img.shields.io/badge/Version-1.0.0-purple.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-1.0.2-purple.svg" alt="Version">
 </p>
 
 <h1 align="center">LAGC</h1>
@@ -308,6 +308,7 @@ MIT License - see [LICENSE](LICENSE) for details.
   <br>
   ⭐ Star us on GitHub if LAGC helps your research!
 </p>
+
 
 
 
