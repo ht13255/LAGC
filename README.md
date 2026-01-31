@@ -48,7 +48,7 @@ LAGC specializes in simulating **Fault-Tolerant Measurement-Based Quantum Comput
 ## 📦 Installation
 
 ```bash
-pip install lagc
+pip install lagc-quantum-photonics
 ```
 
 ### Requirements
@@ -205,4 +205,5 @@ MIT License - see [LICENSE](LICENSE) for details.
   <br>
   ⭐ Star us on GitHub if LAGC helps your research!
 </p>
+
 
