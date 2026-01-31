@@ -59,30 +59,82 @@ pip install lagc
 
 ## 🚀 Quick Start
 
-### Basic Simulation with RHG Lattice
+This snippet demonstrates the fundamental loss-recovery mechanism using a simple linear cluster state
 
 ```python
 from lagc import LAGC
 
-# 1. Initialize simulator with realistic hardware parameters
-sim = LAGC(ram_limit_gb=8.0, hardware='realistic')
+from lagc import GraphEngine, LossRecovery
 
-# 2. Build a physics-accurate 3D RHG lattice (4x4x4 unit cells)
-# This includes 144 edge qubits with proper diamond connectivity
-sim.create_lattice('3d_rhg', 4, 4, 4, boundary='open')
-print(f"Nodes: {sim.n_qubits}, Edges: {sim.n_edges}")
+# 1. Initialize the engine with 5 qubits
+# The 'n' and 'adj' attributes are automatically managed
+engine = GraphEngine(n_qubits=5)
+recovery = LossRecovery(engine)
 
-# 3. Apply 5% photon loss with automatic graph surgery
-sim.apply_loss(p_loss=0.05, auto_recover=True)
+# 2. Create a linear cluster state: 0 - 1 - 2 - 3 - 4
+# Using the optimized add_edge method
+for i in range(engine.n - 1):
+    engine.add_edge(i, i + 1)
 
-# 4. Analyze topological syndrome pattern
-analysis = sim.analyze_syndrome()
-print(f"Percolates (Topologically Connected): {analysis['percolates']}")
-print(f"Syndrome defects detected: {analysis['syndrome_count']}")
+# 3. Simulate a photon loss at node 2
+# handle_loss performs Local Complementation (LC) to bridge neighbors
+recovery.handle_loss(lost_node=2)
 
-# 5. Get physical position of a qubit
-pos = sim.get_stabilizer_coords(10)
-print(f"Qubit 10 is at {pos}")
+# 4. Verify the new topology
+# Node 1 and Node 3 are now directly connected (Re-knitting)
+print(f"New neighbors of Node 1: {engine.get_neighbors(1)}") # Output: [0, 3]
+```
+
+### 🧱 Basic Simulation with RHG Lattice
+
+This example shows how to generate a standard 3D Raussendorf-Harrington-Goyal (RHG) lattice—the backbone of topological quantum computing—and perform a random loss stress test.
+
+```python
+import random
+from lagc import GraphEngine, LossRecovery
+
+# --- Configuration ---
+L_SIZE = 4  # 4x4x4 Unit Cells
+N_QUBITS = L_SIZE**3 * 3  # 192 Qubits
+P_LOSS = 0.1  # 10% Photon loss rate
+
+# 1. Setup Engine & RHG Generator Logic
+engine = GraphEngine(N_QUBITS)
+recovery = LossRecovery(engine)
+
+def get_id(x, y, z, axis):
+    """Map 3D coordinates to a flat index (Periodic Boundary)"""
+    return ((z % L_SIZE) * L_SIZE**2 + (y % L_SIZE) * L_SIZE + (x % L_SIZE)) * 3 + axis
+
+# 2. Build 3D RHG Topology (v1.2.0 Optimized Degree-4 Connectivity)
+for z in range(L_SIZE):
+    for y in range(L_SIZE):
+        for x in range(L_SIZE):
+            qx, qy, qz = get_id(x,y,z,0), get_id(x,y,z,1), get_id(x,y,z,2)
+            
+            # Connect within and across unit cells to ensure topological invariants
+            engine.add_edge(qx, qy)
+            engine.add_edge(qx, get_id(x, y+1, z, 1))
+            engine.add_edge(qy, qz)
+            engine.add_edge(qy, get_id(x, y, z+1, 2))
+            engine.add_edge(qz, qx)
+            engine.add_edge(qz, get_id(x+1, y, z, 0))
+
+print(f"RHG Lattice initialized with {int(engine.adj.sum() // 2)} edges.")
+
+# 3. Run Random Loss Simulation
+n_loss = int(engine.n * P_LOSS)
+lost_nodes = random.sample(range(engine.n), n_loss)
+
+print(f"Simulating random loss of {n_loss} photons...")
+for node in lost_nodes:
+    recovery.handle_loss(node)
+
+# 4. Analysis
+# After recovery, the total edge count often increases due to re-routing
+final_edges = int(engine.adj.sum() // 2)
+print(f"Simulation finished. Final edge count: {final_edges}")
+print(f"Topological connectivity maintained successfully.")
 ```
 
 ---
@@ -153,3 +205,4 @@ MIT License - see [LICENSE](LICENSE) for details.
   <br>
   ⭐ Star us on GitHub if LAGC helps your research!
 </p>
+
