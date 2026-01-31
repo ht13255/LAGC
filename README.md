@@ -179,6 +179,13 @@ The `SyndromeAnalyzer` provides deep insights into the fault-tolerance of your g
 
 ---
 
+### Visual Results
+| 1D Cluster Recovery | 3D RHG Lattice Structure |
+| :---: | :---: |
+| ![Linear Recovery](./assets/linear_recovery.png) | ![3D RHG](./assets/rhg_3d_lattice.png) |
+
+
+
 ## 📝 Citation
 
 If you use LAGC in your research, please cite:
@@ -205,5 +212,6 @@ MIT License - see [LICENSE](LICENSE) for details.
   <br>
   ⭐ Star us on GitHub if LAGC helps your research!
 </p>
+
 
 
